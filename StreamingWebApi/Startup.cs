@@ -27,20 +27,18 @@ namespace StreamingWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IWS_USUARIORepository, WS_USUARIORepository>();
+            services.AddTransient<IWS_MULTIMEDIARepository, WS_MULTIMEDIARepository>();
             services.AddTransient<IWS_CLASIFICACIONRepository, WS_CLASIFICACIONRepository>();
             services.AddTransient<IWS_FACTURARepository, WS_FACTURARepository>();
-            /* services.AddTransient<IWS_GENERORepository, WS_GENERORepository>();
-            services.AddTransient<IWS_MULTIMEDIARepository, WS_MULTIMEDIARepository>();
-            services.AddTransient<IWS_MULTIMEDIA_GENERORepository, WS_GENERORepository>();
-            services.AddTransient<IWS_MULTIMEDIA_SUSCRIPCIONRepository, WS_MULTIMEDIA_SUSCRIPCIONRepository>();
-            services.AddTransient<IWS_PAGORepository, WS_PAGORepository>();
-            services.AddTransient<IWS_SUSCRIPCIONRepository, WS_SUSCRIPCIONRepository>();
-            services.AddTransient<IWS_TARJETARepository, WS_TARJETARepository>();
-            services.AddTransient<IWS_TIPO_MULTIMEDIARepository, WS_TIPO_MULTIMEDIARepository>();
-            services.AddTransient<IWS_TIPO_SUSCRIPCIONRepository, WS_TIPO_SUSCRIPCIONRepository>();
-            services.AddTransient<IWS_VISITARepository, WS_VISITARepository>();*/
+            services.AddTransient<IWS_GENERORepository, WS_GENERORepository>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Todos",
+                    builer => builer.WithOrigins("*").WithHeaders("*").WithMethods("*"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,10 +50,12 @@ namespace StreamingWebApi
             }
             else
             {
+
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors("Todos");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

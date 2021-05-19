@@ -14,13 +14,13 @@ namespace StreamingWebApi.Repositories
         {
             configuration = _configuration;
         }
-        public object GetWS_CLASIFICACIONDetails(int usId)
+        public object GetWS_CLASIFICACIONDetails(int clId)
         {
             object result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("CL_ID", OracleDbType.Int32, ParameterDirection.Input, usId);
+                dyParam.Add("CL_ID", OracleDbType.Int32, ParameterDirection.Input, clId);
                 dyParam.Add("CL_DETAIL_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
                 var conn = this.GetConnection();

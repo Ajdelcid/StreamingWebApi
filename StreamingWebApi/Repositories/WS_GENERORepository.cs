@@ -7,21 +7,21 @@ using System.Data;
 
 namespace StreamingWebApi.Repositories
 {
-    public class WS_FACTURARepository : IWS_FACTURARepository
+    public class WS_GENERORepository : IWS_GENERORepository
     {
         IConfiguration configuration;
-        public WS_FACTURARepository(IConfiguration _configuration)
+        public WS_GENERORepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
-        public object GetWS_FACTURADetails(int fcId)
+        public object GetWS_GENERODetails(int gnId)
         {
             object result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("FC_ID", OracleDbType.Int32, ParameterDirection.Input, fcId);
-                dyParam.Add("FC_DETAIL_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+                dyParam.Add("GN_ID", OracleDbType.Int32, ParameterDirection.Input, gnId);
+                dyParam.Add("GN_DETAIL_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
@@ -31,7 +31,7 @@ namespace StreamingWebApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "US_GETWS_FACTURADETAILS";
+                    var query = "US_GETWS_GENERODETAILS";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -44,14 +44,14 @@ namespace StreamingWebApi.Repositories
             return result;
         }
 
-        public object GetWS_FACTURAList()
+        public object GetWS_GENEROList()
         {
             object result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
 
-                dyParam.Add("FCCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+                dyParam.Add("GNCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
@@ -61,7 +61,7 @@ namespace StreamingWebApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "US_GETWS_FACTURA";
+                    var query = "US_GETWS_GENERO";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -82,4 +82,3 @@ namespace StreamingWebApi.Repositories
         }
     }
 }
-

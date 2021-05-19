@@ -9,18 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace StreamingWebApi.Controllers
 {
     [Produces("application/json")]
-    public class WS_FACTURAController : Controller
+    public class WS_GENEROController : Controller
     {
-        IWS_FACTURARepository ws_facturaRepository;
-        public WS_FACTURAController(IWS_FACTURARepository _ws_facturaRepository)
+        IWS_GENERORepository ws_generoRepository;
+        public WS_GENEROController(IWS_GENERORepository _ws_generoRepository)
         {
-            ws_facturaRepository = _ws_facturaRepository;
+            ws_generoRepository = _ws_generoRepository;
         }
 
-        [Route("api/GetWS_FACTURAList")]
-        public ActionResult GetWS_FACTURAList()
+        [Route("api/GetWS_GENEROList")]
+        public ActionResult GetWS_GENEROList()
         {
-            var result = ws_facturaRepository.GetWS_FACTURAList();
+            var result = ws_generoRepository.GetWS_GENEROList();
             if (result == null)
             {
                 return NotFound();
@@ -28,10 +28,10 @@ namespace StreamingWebApi.Controllers
             return Ok(result);
         }
 
-        [Route("api/GetWS_FACTURADetails/{clId}")]
-        public ActionResult GetWS_FACTURADetails(int fcId)
+        [Route("api/GetWS_GENERODetails/{gnId}")]
+        public ActionResult GetWS_GENERODetails(int gnId)
         {
-            var result = ws_facturaRepository.GetWS_FACTURADetails(fcId);
+            var result = ws_generoRepository.GetWS_GENERODetails(gnId);
             if (result == null)
             {
                 return NotFound();

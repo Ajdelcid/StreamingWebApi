@@ -38,5 +38,18 @@ namespace StreamingWebApi.Controllers
             }
             return Ok(result);
         }
+
+        [Route("api/GetWS_USUARIOLogin/{usIdC},{usPass}")]
+        public ActionResult GetWS_USUARIOLogin(string usIdC, string usPass)
+        {
+            var result = ws_usuarioRepository.GetWS_USUARIOLogin(usIdC, usPass);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+
     }
 }

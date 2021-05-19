@@ -74,11 +74,42 @@ namespace StreamingWebApi.Repositories
             return result;
         }
 
+        public object GetWS_USUARIOLogin(string usIdC, string usPass)
+        {
+            object result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("US_ID", OracleDbType.NVarchar2, ParameterDirection.Input, usIdC);
+                dyParam.Add("US_PASS", OracleDbType.NVarchar2, ParameterDirection.Input, usPass);
+                dyParam.Add("US_DETAIL_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "US_GETWS_USUARIOLogin";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
         public IDbConnection GetConnection()
         {
             var connectionString = configuration.GetSection("ConnectionStrings").GetSection("Connection").Value;
             var conn = new OracleConnection(connectionString);
             return conn;
-        }
+        }  
     }
 }
