@@ -12,5 +12,7 @@ namespace StreamingWebApi.Repositories
         object GetWS_USUARIODetails(int usId);
 
         object GetWS_USUARIOLogin(string usIdC, string usPass);
+
+        object PostWS_USUARIOInsert(int usIdC, string usName, string usSName, string uLastName, string usSLastName, string usEmail, string usPass, string usTel);
     }
 }

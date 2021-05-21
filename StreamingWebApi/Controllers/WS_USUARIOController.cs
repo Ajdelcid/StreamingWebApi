@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using StreamingWebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using StreamingWebApi.Models;
 
 namespace StreamingWebApi.Controllers
 {
@@ -43,6 +44,17 @@ namespace StreamingWebApi.Controllers
         public ActionResult GetWS_USUARIOLogin(string usIdC, string usPass)
         {
             var result = ws_usuarioRepository.GetWS_USUARIOLogin(usIdC, usPass);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [Route("api/PostWS_USUARIOInsert")]
+        public ActionResult PostWS_USUARIOInsert([FromBody] CrearUsuario model)
+        {
+            var result = ws_usuarioRepository.PostWS_USUARIOInsert(model.usIdC, model.usName, model.usSName, model.usLastName, model.usSLastName, model.usEmail, model.usPass, model.usTel);
             if (result == null)
             {
                 return NotFound();
